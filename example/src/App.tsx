@@ -1,12 +1,24 @@
 import * as React from 'react';
 
-import { StyleSheet, View } from 'react-native';
-import { VideoEffectView } from 'react-native-video-effect';
+import { Button, Dimensions, StyleSheet, View } from 'react-native';
+import { VideoEffectView, videoEffect } from 'react-native-video-effect';
+
+const { width, height } = Dimensions.get('window');
 
 export default function App() {
+  const addTwoNumbers = async () => {
+    try {
+      const result = await videoEffect.generateRandomMatrix(5, 5);
+      console.log(result);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <VideoEffectView color="#32a852" style={styles.box} />
+      <VideoEffectView style={styles.box} />
+      <Button title="Add two numbers" onPress={addTwoNumbers} />
     </View>
   );
 }
@@ -18,8 +30,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   box: {
-    width: 60,
-    height: 60,
+    width: width,
+    height: height,
     marginVertical: 20,
   },
 });

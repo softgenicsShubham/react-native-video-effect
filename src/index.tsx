@@ -2,6 +2,7 @@ import {
   requireNativeComponent,
   UIManager,
   Platform,
+  NativeModules,
   type ViewStyle,
 } from 'react-native';
 
@@ -12,7 +13,7 @@ const LINKING_ERROR =
   '- You are not using Expo Go\n';
 
 type VideoEffectProps = {
-  color: string;
+  // color: string;
   style: ViewStyle;
 };
 
@@ -24,3 +25,5 @@ export const VideoEffectView =
     : () => {
         throw new Error(LINKING_ERROR);
       };
+
+export const videoEffect = NativeModules.VideoEffectModules;
