@@ -1,29 +1,43 @@
+import React, { useEffect } from 'react';
+import { DeviceEventEmitter } from 'react-native';
 import {
   requireNativeComponent,
   UIManager,
-  Platform,
   NativeModules,
   type ViewStyle,
 } from 'react-native';
 
 const LINKING_ERROR =
-  `The package 'react-native-video-effect' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo Go\n';
+  'You have not properly linked the native module or you are running in the Expo client.';
 
 type VideoEffectProps = {
-  // color: string;
   style: ViewStyle;
 };
 
 const ComponentName = 'VideoEffectView';
 
-export const VideoEffectView =
+const VideoEffectViewComponent =
   UIManager.getViewManagerConfig(ComponentName) != null
     ? requireNativeComponent<VideoEffectProps>(ComponentName)
     : () => {
         throw new Error(LINKING_ERROR);
       };
+
+export const VideoEffectView = (props: VideoEffectProps) => {
+  useEffect(() => {
+    const subscription = DeviceEventEmitter.addListener(
+      'ImageDetailsEvent',
+      function (e: any) {
+        console.log('Image details: ', e.width, e.height, e.planes);
+      }
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  return <VideoEffectViewComponent {...props} />;
+};
 
 export const videoEffect = NativeModules.VideoEffectModules;
