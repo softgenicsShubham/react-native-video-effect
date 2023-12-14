@@ -11,11 +11,11 @@ npm install react-native-video-effect
 ## Usage
 
 ```js
-import { VideoEffectView } from "react-native-video-effect";
+import { VideoEffectView } from 'react-native-video-effect';
 
 // ...
 
-<VideoEffectView color="tomato" />
+<VideoEffectView color="tomato" />;
 ```
 
 ## Contributing
